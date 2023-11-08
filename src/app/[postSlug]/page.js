@@ -1,13 +1,11 @@
 import React from 'react';
-import fs from 'fs/promises';
-import path from 'path';
-import matter from 'gray-matter';
 import { loadBlogPost } from "@/helpers/file-helpers";
 import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import BlogHero from '@/components/BlogHero';
-import DivisionGroupsDemo from '@/components/DivisionGroupsDemo/DivisionGroupsDemo';
 import CodeSnippet from '@/components/CodeSnippet/CodeSnippet';
+const DivisionGroupsDemo = React.lazy(() => import('@/components/DivisionGroupsDemo/DivisionGroupsDemo'));
+const CircularColorsDemo = React.lazy(() => import('@/components/CircularColorsDemo/CircularColorsDemo'));
 
 import styles from './postSlug.module.css';
 
@@ -32,7 +30,7 @@ async function BlogPost({params}) {
       <div className={styles.page}>
         <MDXRemote 
           source={content} 
-          components={{DivisionGroupsDemo, CodeSnippet}}
+          components={{DivisionGroupsDemo, CodeSnippet, CircularColorsDemo}}
         />
       </div>
     </article>

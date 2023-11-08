@@ -8,6 +8,7 @@ import SliderControl from '@/components/SliderControl';
 
 import Equation from './Equation';
 import styles from './DivisionGroupsDemo.module.css';
+import { LayoutGroup, motion } from 'framer-motion';
 
 function DivisionGroupsDemo({
   numOfItems = 12,
@@ -17,6 +18,8 @@ function DivisionGroupsDemo({
   const [numOfGroups, setNumOfGroups] = React.useState(
     initialNumOfGroups
   );
+
+  const id = React.useId();
 
   const numOfItemsPerGroup = Math.floor(
     numOfItems / numOfGroups
@@ -54,39 +57,58 @@ function DivisionGroupsDemo({
         />
       </header>
 
-      <div className={styles.demoWrapper}>
-        <div
-          className={clsx(styles.demoArea)}
-          style={gridStructure}
-        >
-          {range(numOfGroups).map((groupIndex) => (
-            <div key={groupIndex} className={styles.group}>
-              {range(numOfItemsPerGroup).map((index) => {
-                return (
-                  <div
-                    key={index}
-                    className={styles.item}
-                  />
-                );
-              })}
-            </div>
-          ))}
+      <LayoutGroup>
+        <div className={styles.demoWrapper}>
+          <div
+            className={clsx(styles.demoArea)}
+            style={gridStructure}
+          >
+              {range(numOfGroups).map((groupIndex) => (
+                <div key={groupIndex} className={styles.group}>
+                  {range(numOfItemsPerGroup).map((index) => {
+                    const ballId = `${id}-${index + groupIndex * numOfItemsPerGroup}`;
+                    return (
+                      <motion.div
+                        key={ballId}
+                        className={styles.item}
+                        layoutId={ballId}
+                        transition={{
+                          type: "spring",
+                          damping: 20,
+                          stiffness: 200,
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+              ))}
+          </div>
         </div>
-      </div>
 
-      {includeRemainderArea && (
-        <div className={styles.remainderArea}>
-          <p className={styles.remainderHeading}>
-            Remainder Area
-          </p>
-
-          {range(remainder).map((index) => {
-            return (
-              <div key={index} className={styles.item} />
-            );
-          })}
-        </div>
-      )}
+        {includeRemainderArea && (
+          <div className={styles.remainderArea}>
+            <p className={styles.remainderHeading}>
+              Remainder Area
+            </p>
+    
+            {range(remainder).map((index) => {
+              const ballId = `${id}-${(numOfGroups * numOfItemsPerGroup - 1 + remainder - index)}`;
+              return (
+                <motion.div 
+                  key={ballId} 
+                  layoutId={ballId} 
+                  transition={{
+                    type: "spring",
+                    damping: 20,
+                    stiffness: 200,
+                  }}
+                  className={styles.item} 
+                />
+              );
+            })}
+          </div>
+        )}
+      </LayoutGroup>
 
       <Equation
         dividend={numOfItems}
