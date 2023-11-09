@@ -1,3 +1,4 @@
+"use client";
 import React from 'react';
 import clsx from 'clsx';
 import {
@@ -10,6 +11,7 @@ import Card from '@/components/Card';
 import VisuallyHidden from '@/components/VisuallyHidden';
 
 import styles from './CircularColorsDemo.module.css';
+import { motion } from 'framer-motion';
 
 const COLORS = [
   { label: 'red', value: 'hsl(348deg 100% 60%)' },
@@ -19,11 +21,28 @@ const COLORS = [
 
 function CircularColorsDemo() {
   // TODO: This value should increase by 1 every second:
-  const timeElapsed = 0;
+  const [play, setPlay] = React.useState(false)
+  const [timeElapsed, setTimeElapsed] = React.useState(0)
+  const id = React.useId()
+  
+  React.useEffect(() => {
+    if (play) {
+      const incrementTime = setInterval(() => {
+        setTimeElapsed((prevTime) => prevTime + 1)
+      }, 1000)
+      
+      return () => {
+        clearInterval(incrementTime)
+      }
+    } else {
+      setTimeElapsed(0)
+    }
+  }, [play])
 
   // TODO: This value should cycle through the colors in the
   // COLORS array:
-  const selectedColor = COLORS[0];
+  const selectedColorIndex = timeElapsed - COLORS.length * Math.floor(timeElapsed / COLORS.length)
+  const selectedColor = COLORS[selectedColorIndex];
 
   return (
     <Card as="section" className={styles.wrapper}>
@@ -38,7 +57,8 @@ function CircularColorsDemo() {
               key={index}
             >
               {isSelected && (
-                <div
+                <motion.div
+                  layoutId={`${id}`}
                   className={
                     styles.selectedColorOutline
                   }
@@ -69,11 +89,13 @@ function CircularColorsDemo() {
           <dd>{timeElapsed}</dd>
         </dl>
         <div className={styles.actions}>
-          <button>
+          <button onClick={() => setPlay(true)}>
             <Play />
             <VisuallyHidden>Play</VisuallyHidden>
           </button>
-          <button>
+          <button onClick={() => {
+            setPlay(false)
+          }}>
             <RotateCcw />
             <VisuallyHidden>Reset</VisuallyHidden>
           </button>
