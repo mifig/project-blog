@@ -15,6 +15,7 @@
     "date-fns": "2.30.0",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.6",
+    "feed": "^4.2.2",
     "framer-motion": "10.14",
     "gray-matter": "4.0.3",
     "js-cookie": "3.0.5",

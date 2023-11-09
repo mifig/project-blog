@@ -41,6 +41,8 @@ function Header({ initialTheme, className, ...delegated }) {
       <div className={styles.actions}>
         <Link
           href="/rss.xml"
+          rel="noreferrer"
+          target="_blank"
         >
           <button className={styles.action}>
             <Rss
