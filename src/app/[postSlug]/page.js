@@ -5,8 +5,8 @@ import { notFound } from 'next/navigation'
 
 import BlogHero from '@/components/BlogHero';
 import CodeSnippet from '@/components/CodeSnippet/CodeSnippet';
-const DivisionGroupsDemo = React.lazy(() => import('@/components/DivisionGroupsDemo/DivisionGroupsDemo'));
-const CircularColorsDemo = React.lazy(() => import('@/components/CircularColorsDemo/CircularColorsDemo'));
+import DivisionGroupsDemo from "@/components/DivisionGroupsDemo"
+import CircularColorsDemo from '@/components/CircularColorsDemo';
 
 import styles from './postSlug.module.css';
 
@@ -42,7 +42,11 @@ async function BlogPost({params}) {
       <div className={styles.page}>
         <MDXRemote 
           source={content} 
-          components={{DivisionGroupsDemo, CodeSnippet, CircularColorsDemo}}
+          components={{
+            pre: CodeSnippet, 
+            DivisionGroupsDemo, 
+            CircularColorsDemo
+          }}
         />
       </div>
     </article>

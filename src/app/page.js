@@ -1,7 +1,9 @@
 import React from 'react';
+
 import { getBlogPostList } from "@/helpers/file-helpers";
 import BlogSummaryCard from '@/components/BlogSummaryCard';
 import { BLOG_TITLE } from '@/constants';
+
 import styles from './homepage.module.css';
 
 export const metadata = {
