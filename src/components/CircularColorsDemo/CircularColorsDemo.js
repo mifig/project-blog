@@ -21,12 +21,12 @@ const COLORS = [
 
 function CircularColorsDemo() {
   // TODO: This value should increase by 1 every second:
-  const [play, setPlay] = React.useState(false)
+  const [playStatus, setPlayStatus] = React.useState("stop")
   const [timeElapsed, setTimeElapsed] = React.useState(0)
   const id = React.useId()
   
   React.useEffect(() => {
-    if (play) {
+    if (playStatus === "play") {
       const incrementTime = setInterval(() => {
         setTimeElapsed((prevTime) => prevTime + 1)
       }, 1000)
@@ -34,10 +34,10 @@ function CircularColorsDemo() {
       return () => {
         clearInterval(incrementTime)
       }
-    } else {
+    } else if(playStatus === "stop") {
       setTimeElapsed(0)
     }
-  }, [play])
+  }, [playStatus])
 
   // TODO: This value should cycle through the colors in the
   // COLORS array:
@@ -89,12 +89,16 @@ function CircularColorsDemo() {
           <dd>{timeElapsed}</dd>
         </dl>
         <div className={styles.actions}>
-          <button onClick={() => setPlay(true)}>
-            <Play />
-            <VisuallyHidden>Play</VisuallyHidden>
+          <button onClick={() => setPlayStatus((currentStatus) => currentStatus === "play" ? "pause" : "play")}>
+            { playStatus === "play" ? 
+              <Pause />
+              :
+              <Play />
+            }
+            <VisuallyHidden>{playStatus === "play" ? "Pause" : "Play"}</VisuallyHidden>
           </button>
           <button onClick={() => {
-            setPlay(false)
+            setPlayStatus("stop")
           }}>
             <RotateCcw />
             <VisuallyHidden>Reset</VisuallyHidden>

@@ -2,7 +2,7 @@ import fs from 'fs';
 import { Feed } from "feed";
 import { getBlogPostList, loadBlogPost } from "@/helpers/file-helpers";
 
-export async function generateRSSFeed() {
+export async function GET() {
   const url = "localhost:3000";
   
   const feedOptions = {
@@ -19,19 +19,18 @@ export async function generateRSSFeed() {
   
   const blogPosts = await getBlogPostList();
 
-  (blogPosts).forEach((post) => {
-    const blogPost = loadBlogPost(post.slug);
+  for (const post of blogPosts) {
+    const blogPost = await loadBlogPost(post.slug);
     feed.addItem({
       title: blogPost.frontmatter.title,
       id: `${url}/${post.slug}`,
+      link: `${url}/${post.slug}`,
       description: blogPost.frontmatter.abstract,
       date: new Date(blogPost.frontmatter.publishedOn),
     })
-  });
+  };
 
-  fs.writeFileSync("./public/rss.xml", feed.rss2());
-
-  return new Response(feed.xml({ident: true}), {
+  return new Response(feed.rss2(), {
     headers: {
       "Content-Type": "application/xml" 
     }
