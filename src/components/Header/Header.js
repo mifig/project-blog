@@ -15,7 +15,7 @@ function Header({ initialTheme, className, ...delegated }) {
   const [theme, setTheme] = React.useState(initialTheme);
 
   function handleTheme() {
-    const nextTheme = theme == "light" ? "dark" : "light";
+    const nextTheme = theme === "light" ? "dark" : "light";
 
     setTheme(nextTheme)
 

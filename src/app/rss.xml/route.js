@@ -1,4 +1,3 @@
-import fs from 'fs';
 import { Feed } from "feed";
 import { getBlogPostList, loadBlogPost } from "@/helpers/file-helpers";
 

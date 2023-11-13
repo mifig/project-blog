@@ -4,7 +4,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 import { notFound } from 'next/navigation'
 
 import BlogHero from '@/components/BlogHero';
-import CodeSnippet from '@/components/CodeSnippet/CodeSnippet';
+import CodeSnippet from '@/components/CodeSnippet';
 import DivisionGroupsDemo from "@/components/DivisionGroupsDemo"
 import CircularColorsDemo from '@/components/CircularColorsDemo';
 
